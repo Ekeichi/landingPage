@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../components/Navbar';
 import Footer from '../components/Footer';
+import { api } from '../services/api';
 
 const Signup: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -45,17 +46,14 @@ const Signup: React.FC = () => {
     setIsLoading(true);
     
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      // Here you would typically make an API call to your backend
-      console.log('Email submitted:', email);
+      // Make real API call to backend
+      await api.signup({ email });
       
       setIsSuccess(true);
       setEmail('');
     } catch (error) {
       console.error('Signup error:', error);
-      setErrors({ submit: 'An error occurred. Please try again.' });
+      setErrors({ submit: error instanceof Error ? error.message : 'An error occurred. Please try again.' });
     } finally {
       setIsLoading(false);
     }
