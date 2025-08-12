@@ -14,16 +14,11 @@ app = FastAPI(
 )
 
 # Configuration CORS depuis les variables d'environnement
-allowed_origins = os.getenv("ALLOWED_ORIGINS", "http://localhost:5173,http://localhost:3000").split(",")
-
-# Ajouter l'origine Railway si elle existe
-railway_url = os.getenv("RAILWAY_STATIC_URL")
-if railway_url:
-    allowed_origins.append(railway_url)
+# allowed_origins = os.getenv("ALLOWED_ORIGINS", "http://localhost:5173,http://localhost:3000").split(",")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=allowed_origins,
+    allow_origins="tranquil-wisdom-production.up.railway.app",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
