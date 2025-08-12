@@ -16,6 +16,11 @@ app = FastAPI(
 # Configuration CORS depuis les variables d'environnement
 allowed_origins = os.getenv("ALLOWED_ORIGINS", "http://localhost:5173,http://localhost:3000").split(",")
 
+# Ajouter l'origine Railway si elle existe
+railway_url = os.getenv("RAILWAY_STATIC_URL")
+if railway_url:
+    allowed_origins.append(railway_url)
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=allowed_origins,
@@ -36,3 +41,8 @@ app.include_router(contact.router, prefix="/api/v1")
 @app.get("/")
 async def root():
     return {"message": "Bienvenue sur l'API Peakflow Technologies"}
+
+@app.get("/health")
+async def health_check():
+    """Endpoint de santé pour Railway"""
+    return {"status": "healthy", "message": "API Peakflow Technologies opérationnelle"}
