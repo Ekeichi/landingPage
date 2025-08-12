@@ -1,4 +1,4 @@
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+const API_URL = import.meta.env.API_URL || 'http://localhost:8000';
 
 export interface SignupData {
   email: string;
@@ -12,7 +12,7 @@ export interface ContactData {
 
 export const api = {
   async signup(data: SignupData) {
-    const response = await fetch(`${API_BASE_URL}/api/v1/signup`, {
+    const response = await fetch(`${API_URL}/api/v1/signup`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -29,7 +29,7 @@ export const api = {
   },
   
   async contact(data: ContactData) {
-    const response = await fetch(`${API_BASE_URL}/api/v1/contact`, {
+    const response = await fetch(`${API_URL}/api/v1/contact`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -46,7 +46,7 @@ export const api = {
   },
 
   async healthCheck() {
-    const response = await fetch(`${API_BASE_URL}/health`);
+    const response = await fetch(`${API_URL}/health`);
     if (!response.ok) {
       throw new Error('API health check failed');
     }
