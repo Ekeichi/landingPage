@@ -1,4 +1,8 @@
-const API_URL = (import.meta as any).env?.VITE_API_URL || 'http://localhost:8000';
+// api.ts
+
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+
+console.log("API_URL =", API_URL); // Debug en prod/local
 
 export interface SignupData {
   email: string;
@@ -10,46 +14,35 @@ export interface ContactData {
   message: string;
 }
 
+async function handleResponse(response: Response, defaultError: string) {
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}));
+    throw new Error(errorData.detail || defaultError);
+  }
+  return response.json();
+}
+
 export const api = {
   async signup(data: SignupData) {
     const response = await fetch(`${API_URL}/api/v1/signup`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
     });
-    
-    if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
-      throw new Error(errorData.detail || 'Signup failed');
-    }
-    
-    return response.json();
+    return handleResponse(response, 'Signup failed');
   },
-  
+
   async contact(data: ContactData) {
     const response = await fetch(`${API_URL}/api/v1/contact`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
     });
-    
-    if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
-      throw new Error(errorData.detail || 'Contact request failed');
-    }
-    
-    return response.json();
+    return handleResponse(response, 'Contact request failed');
   },
 
   async healthCheck() {
     const response = await fetch(`${API_URL}/health`);
-    if (!response.ok) {
-      throw new Error('API health check failed');
-    }
-    return response.json();
+    return handleResponse(response, 'API health check failed');
   }
 };

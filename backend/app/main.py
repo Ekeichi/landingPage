@@ -13,12 +13,16 @@ app = FastAPI(
     version="1.0.0"
 )
 
-# Configuration CORS depuis les variables d'environnement
-# allowed_origins = os.getenv("ALLOWED_ORIGINS", "http://localhost:5173,http://localhost:3000").split(",")
+FRONTEND_URL = os.getenv("FRONTEND_URL", "https://tranquil-wisdom-production.up.railway.app")  
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://localhost:3000", "http://127.0.0.1:5173", "https://tranquil-wisdom-production.up.railway.app"],
+    allow_origins=[
+        "http://localhost:5173",
+        "http://localhost:3000",
+        "http://127.0.0.1:5173",
+        FRONTEND_URL
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -28,7 +32,7 @@ app.add_middleware(
 async def startup_event():
     """Événement déclenché au démarrage de l'application"""
     create_tables()
-    print("✅ Base de données initialisée")
+    print("Base de données initialisée")
 
 app.include_router(signup.router, prefix="/api/v1")
 app.include_router(contact.router, prefix="/api/v1")
