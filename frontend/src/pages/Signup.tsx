@@ -63,41 +63,17 @@ const Signup: React.FC = () => {
     return (
       <>
         <Header />
-        <div style={{
-          minHeight: '100vh',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          padding: '2rem',
-          background: 'var(--color-bg)'
-        }}>
-          <div style={{
-            textAlign: 'center',
-            maxWidth: '500px',
-            padding: '3rem',
-            background: 'rgba(255, 255, 255, 0.05)',
-            borderRadius: '15px',
-            border: '1px solid rgba(255, 255, 255, 0.1)'
-          }}>
-            <h2 style={{
-              fontSize: '2rem',
-              fontWeight: '600',
-              marginBottom: '1.5rem',
-              color: 'var(--color-text)'
-            }}>
-              Thank You!
-            </h2>
-            <p style={{
-              fontSize: '1.1rem',
-              marginBottom: '2rem',
-              color: 'var(--color-text-secondary)',
-              fontFamily: 'Arial, Helvetica, sans-serif'
-            }}>
-              You've been added to our early access list. We'll notify you as soon as Kairos Zero is available.
-            </p>
-            <Link to="/" className="btn primary" style={{ fontSize: '1.1rem' }}>
-              Return to Home
-            </Link>
+        <div className="page-container">
+          <div className="auth-container">
+            <div className="card">
+              <h2>Thank You!</h2>
+              <p>
+                You've been added to our early access list. We'll notify you as soon as Kairos Zero is available.
+              </p>
+              <Link to="/" className="btn primary">
+                Return to Home
+              </Link>
+            </div>
           </div>
         </div>
         <Footer />
@@ -108,115 +84,73 @@ const Signup: React.FC = () => {
   return (
     <>
       <Header />
-      <div style={{
-        minHeight: '100vh',
-        padding: '2rem',
-        background: 'var(--color-bg)',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center'
-      }}>
-        <div style={{
-          maxWidth: '500px',
-          width: '100%',
-          padding: '3rem',
-          background: 'rgba(255, 255, 255, 0.05)',
-          borderRadius: '15px',
-          border: '1px solid rgba(255, 255, 255, 0.1)',
-          backdropFilter: 'blur(10px)'
-        }}>
-          {/* Header */}
-          <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-            <h1 style={{
-              fontSize: '2.5rem',
-              fontWeight: '600',
-              marginBottom: '1rem',
-              color: 'var(--color-text)',
-              textTransform: 'uppercase',
-              letterSpacing: '2px'
-            }}>
-              Get Early Access
-            </h1>
-            <p style={{
-              fontSize: '1.1rem',
-              color: 'var(--color-text-secondary)',
-              fontFamily: 'Arial, Helvetica, sans-serif',
-              marginBottom: '1rem'
-            }}>
-              Be among the first to experience Kairos Zero
-            </p>
-            <p style={{
-              fontSize: '0.95rem',
-              color: 'var(--color-text-secondary)',
-              fontFamily: 'Arial, Helvetica, sans-serif'
-            }}>
-              Join our exclusive early access list and get notified when we launch.
-            </p>
-          </div>
-
-          {/* Form */}
-          <form onSubmit={handleSubmit}>
-            <div className="form-group" style={{ marginBottom: '2rem' }}>
-              <label className="form-label" htmlFor="email">Email Address</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={email}
-                onChange={handleInputChange}
-                className={`form-input ${errors.email ? 'error' : ''}`}
-                placeholder="Enter your email address"
-                style={{ fontSize: '1.1rem', padding: '1rem' }}
-              />
-              {errors.email && (
-                <div className="error-message">{errors.email}</div>
-              )}
+      <div className="page-container">
+        <div className="auth-container">
+          <div className="card">
+            {/* Header */}
+            <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+              <h1>Get Early Access</h1>
+              <p>
+                Be among the first to experience Kairos Zero
+              </p>
+              <p style={{ fontSize: '0.95rem' }}>
+                Join our exclusive early access list and get notified when we launch.
+              </p>
             </div>
 
-            {errors.submit && (
-              <div className="error-message" style={{ marginBottom: '1.5rem' }}>
-                {errors.submit}
+            {/* Form */}
+            <form onSubmit={handleSubmit}>
+              <div className="form-group">
+                <label className="form-label" htmlFor="email">Email Address</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={email}
+                  onChange={handleInputChange}
+                  className={`form-input ${errors.email ? 'error' : ''}`}
+                  placeholder="Enter your email address"
+                />
+                {errors.email && (
+                  <div className="error-message">{errors.email}</div>
+                )}
               </div>
-            )}
 
-            <button
-              type="submit"
-              disabled={isLoading}
-              className="btn primary"
-              style={{
-                width: '100%',
-                fontSize: '1.2rem',
-                fontWeight: '500',
-                padding: '1rem'
-              }}
-            >
-              {isLoading ? (
-                <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <div className="spinner" style={{ marginRight: '0.5rem' }}></div>
-                  Joining...
-                </span>
-              ) : (
-                'Join Early Access'
+              {errors.submit && (
+                <div className="error-message" style={{ marginBottom: '1.5rem' }}>
+                  {errors.submit}
+                </div>
               )}
-            </button>
-          </form>
 
-          {/* Additional Info */}
-          <div style={{
-            textAlign: 'center',
-            marginTop: '2rem',
-            paddingTop: '2rem',
-            borderTop: '1px solid rgba(255, 255, 255, 0.1)'
-          }}>
-            <p style={{
-              fontSize: '0.8rem',
-              color: 'var(--color-text-secondary)',
-              fontFamily: 'Arial, Helvetica, sans-serif',
-              lineHeight: '1.5'
+              <button
+                type="submit"
+                disabled={isLoading}
+                className="btn primary"
+                style={{ width: '100%' }}
+              >
+                {isLoading ? (
+                  <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <div className="spinner"></div>
+                    Joining...
+                  </span>
+                ) : (
+                  'Join Early Access'
+                )}
+              </button>
+            </form>
+
+            {/* Additional Info */}
+            <div style={{
+              textAlign: 'center',
+              marginTop: '2rem',
+              paddingTop: '2rem',
+              borderTop: '1px solid var(--color-border)'
             }}>
-              No spam, ever. We will only contact you about <br/> 
-              Peakflow Technologies updates and early access opportunities.
-            </p>
+              <p style={{ fontSize: '0.8rem', lineHeight: '1.5' }}>
+                No spam, ever. We will only contact you about <br/> 
+                Peakflow Technologies updates and early access opportunities.
+              </p>
+            </div>
           </div>
         </div>
       </div>
